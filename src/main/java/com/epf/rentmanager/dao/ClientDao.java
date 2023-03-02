@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.exception.DaoException;
+import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
 
@@ -23,7 +24,9 @@ public class ClientDao {
 		}
 		return instance;
 	}
-	
+
+
+	private static final String UPDATE_CLIENT_QUERY="UPDATE Client SET nom = ?, prenom = ?, email = ?, naissance = ? WHERE id= ?;";
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
@@ -98,6 +101,8 @@ public class ClientDao {
 
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
+		} catch (ServiceException e) {
+			throw new RuntimeException(e);
 		}
 		return c;
 
@@ -122,6 +127,8 @@ public class ClientDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
+		} catch (ServiceException e) {
+			throw new RuntimeException(e);
 		}
 		return myList;
 	}
@@ -151,4 +158,26 @@ public class ClientDao {
 		return nb;
 
 	}
+
+
+	public long update(Client client,long id) throws DaoException {
+
+		try {
+			connection = ConnectionManager.getConnection();
+			pstatement = connection.prepareStatement(UPDATE_CLIENT_QUERY);
+			pstatement.setLong(5, id);
+			pstatement.setString(1, client.getLastName());
+			pstatement.setString(2, client.getName());
+			pstatement.setString(3, client.getEmailAdress());
+			pstatement.setDate(4, java.sql.Date.valueOf(client.getDateOfbirth()));
+			pstatement.executeUpdate();
+			System.out.println("Client updated with succes " );
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return client.getIdentifier();
+
+	}
+
 }

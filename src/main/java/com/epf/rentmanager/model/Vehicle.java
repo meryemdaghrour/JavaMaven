@@ -1,5 +1,7 @@
 package com.epf.rentmanager.model;
 
+import com.epf.rentmanager.exception.ServiceException;
+
 import java.util.Objects;
 
 public class Vehicle {
@@ -12,16 +14,31 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(long identifier, String constructor,  int nbPlaces) {
+    public Vehicle(long identifier, String constructor,  int nbPlaces) throws ServiceException {
+        if (constructor == null || constructor.isEmpty()) {
+            throw new ServiceException("Le constructeur de la vehicule ne peut pas être vide");
+        }
+        if(nbPlaces<1)
+        {
+            throw new ServiceException("Le nombre de  place ne peut pas être < à 1");
+        }
         this.identifier = identifier;
         this.constructor = constructor;
         this.nbPlaces = nbPlaces;
+
     }
     public Vehicle(long identifier) {
         this.identifier = identifier;
     }
 
-    public Vehicle( String constructor, String model, int nbPlaces) {
+    public Vehicle( String constructor, String model, int nbPlaces) throws ServiceException{
+        if (constructor == null || constructor.isEmpty()) {
+            throw new ServiceException("Le constructeur de la vehicule ne peut pas être vide");
+        }
+        if(nbPlaces<1)
+        {
+            throw new ServiceException("Le nombre de  place ne peut pas être < à 1");
+        }
 
         this.constructor = constructor;
         this.model = model;

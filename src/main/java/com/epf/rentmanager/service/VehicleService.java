@@ -35,6 +35,16 @@ public class VehicleService {
 		}
 		
 	}
+	public long update(Vehicle vehicle,long id) throws ServiceException {
+		try    {
+			return vehicleDao.getInstance().update(vehicle,id);
+
+		}catch (DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+
+	}
 
 	public Vehicle findById(long id) throws ServiceException {
 		try    {
@@ -52,7 +62,8 @@ public class VehicleService {
 		try    {
 			return vehicleDao.getInstance().findAll();
 
-		}catch (DaoException e){
+		}catch (DaoException e)
+		{
 			e.printStackTrace();
 			throw new ServiceException();
 		}

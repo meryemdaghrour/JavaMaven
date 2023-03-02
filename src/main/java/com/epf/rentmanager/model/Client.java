@@ -1,5 +1,7 @@
 package com.epf.rentmanager.model;
 
+import com.epf.rentmanager.exception.ServiceException;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,17 +14,30 @@ public class Client {
     private LocalDate dateOfbirth;
 
     public Client(String name, String lastName,
-                  String emailAdress, LocalDate dateOfbirth) {
-        this.name = name;
+                  String emailAdress, LocalDate dateOfbirth) throws ServiceException {
+        if (name == null || name.isEmpty()) {
+            throw new ServiceException("Le nom du client ne peut pas être vide");
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            throw new ServiceException("Le prenom du client ne peut pas être vide");
+        }
+
+        this.name = name.toUpperCase();
         this.lastName = lastName;
         this.emailAdress = emailAdress;
         this.dateOfbirth = dateOfbirth;
     }
 
     public Client(long identifier, String name, String lastName,
-                  String emailAdress, LocalDate dateOfbirth) {
+                  String emailAdress, LocalDate dateOfbirth) throws ServiceException{
+        if (name == null || name.isEmpty()) {
+            throw new ServiceException("Le nom du client ne peut pas être vide");
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            throw new ServiceException("Le prenom du client ne peut pas être vide");
+        }
         this.identifier = identifier;
-        this.name = name;
+        this.name = name.toUpperCase();
         this.lastName = lastName;
         this.emailAdress = emailAdress;
         this.dateOfbirth = dateOfbirth;
