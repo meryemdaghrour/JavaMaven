@@ -29,21 +29,20 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Marque</th>
-                                    <th>Modele</th>
+
                                     <th>Nombre de places</th>
-                                    <!--<th>Propriétaire</th>-->
+
                                     <th>Action</th>
                                 </tr>
                                 <tr>
 
                                 <c:forEach items="${vehicles}" var="vehicle">
-                                    <td>${vehicle.id}.</td>
-                                    <td>${vehicle.constructeur}</td>
-                                    <td>${vehicle.modele}</td>
-                                    <td>${vehicle.seats}</td>
-                                    <!--<td>John Doe</td>-->
+                                    <td>${vehicle.identifier}.</td>
+                                    <td>${vehicle.constructor}</td>
+                                    <td>${vehicle.nbPlaces}</td>
+
                                     <td>
-                                        <a class="btn btn-primary disabled" href="car-detail.html">
+                                        <a class="btn btn-primary disabled" href="${pageContext.request.co}">
                                             <i class="fa fa-play"></i>
                                         </a>
                                         <a class="btn btn-success disabled" href="#">

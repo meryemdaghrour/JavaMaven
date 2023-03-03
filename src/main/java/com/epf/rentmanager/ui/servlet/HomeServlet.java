@@ -16,30 +16,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+@WebServlet("/home")
+
 public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         ClientService clientService=ClientService.getInstance();
-
-        try {
-           int nbClients = clientService.getNumber();
-            request.setAttribute("nbClients", nbClients);
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
-
         VehicleService vehicleService=VehicleService.getInstance();
 
         try {
+
+           int nbClients = clientService.getNumber();
+            request.setAttribute("nbClients", nbClients);
             int nbVehicule = vehicleService.getNumber();
             request.setAttribute("nbVehicule",nbVehicule);
+
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").
+                forward(request, response);
 
 
 
