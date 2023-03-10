@@ -13,28 +13,24 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class VehicleDao {
 	
-	private static VehicleDao instance = null;
+
 	Connection connection=null;
 	PreparedStatement pstatement=null;
 	Statement statement=null;
 	ResultSet rs = null;
 	private VehicleDao() {}
-	public static VehicleDao getInstance() {
-		if(instance == null) {
-			instance = new VehicleDao();
-		}
-		return instance;
-	}
-	
-	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur,nb_places) VALUES(?, ?);";
 
-	private static final String UPDATE_VEHICLE_QUERY ="UPDATE Vehicle SET constructeur = ?, nb_places = ? WHERE id = ?;";
+	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur,model,nb_places) VALUES(?, ?,?);";
+
+	private static final String UPDATE_VEHICLE_QUERY ="UPDATE Vehicle SET constructeur = ?,model=?, nb_places = ? WHERE id = ?;";
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
-	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur,nb_places FROM Vehicle WHERE id=?;";
-	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle;";
+	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur,model,nb_places FROM Vehicle WHERE id=?;";
+	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur,model, nb_places FROM Vehicle;";
 
 	private static final String GET_NUMBER = "SELECT COUNT(*) AS total FROM Vehicle;";
 	
@@ -43,17 +39,15 @@ public class VehicleDao {
 			connection = ConnectionManager.getConnection();
 			pstatement = connection.prepareStatement(CREATE_VEHICLE_QUERY,Statement.RETURN_GENERATED_KEYS);
 			pstatement.setString(1, vehicle.getConstructor());
-			pstatement.setInt(2, vehicle.getNbPlaces());
+			pstatement.setString(2, vehicle.getModel());
+			pstatement.setInt(3, vehicle.getNbPlaces());
 			pstatement.executeUpdate();
-			//int success = pstatement.executeUpdate();
 			rs = pstatement.getGeneratedKeys();
 			if (rs.next()) {
 				vehicle.setIdentifier(rs.getInt(1));
 				System.out.println("vehicle added with succes " );
 			}
-			/*if (success == 1) {
-				System.out.println("Client ajouté avec succès " );
-			} */else {
+			else {
 				System.out.println("Error while creating the vehicle " );
 			}
 		} catch (SQLException ex) {
@@ -67,9 +61,10 @@ public class VehicleDao {
 		try {
 			connection = ConnectionManager.getConnection();
 			pstatement = connection.prepareStatement(UPDATE_VEHICLE_QUERY);
-			pstatement.setLong(3, id);
+			pstatement.setLong(4, id);
 			pstatement.setString(1, vehicle.getConstructor());
-			pstatement.setInt(2, vehicle.getNbPlaces());
+			pstatement.setString(2, vehicle.getModel());
+			pstatement.setInt(3, vehicle.getNbPlaces());
 			pstatement.executeUpdate();
 			System.out.println("Vehicle updated with succes " );
 
@@ -105,8 +100,9 @@ public class VehicleDao {
 			System.out.println("Veficle found ");
 			if (rs.next()) {
 				String constructeur=rs.getString("constructeur");
+				String model=rs.getString("model");
 				int nb_places=rs.getInt("nb_places");
-				vehicle= new Vehicle(id,constructeur,nb_places);
+				vehicle= new Vehicle(id,constructeur,model,nb_places);
 			} else {
 				System.out.println("no vehicle : " + id);
 			}
@@ -131,8 +127,9 @@ public class VehicleDao {
 			{
 				int id=rs.getInt("id");
 				String constructeur=rs.getString("constructeur");
+				String model=rs.getString("model");
 				int nb_places=rs.getInt("nb_places");
-				myList.add(new Vehicle(id,constructeur,nb_places));
+				myList.add(new Vehicle(id,constructeur,model,nb_places));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

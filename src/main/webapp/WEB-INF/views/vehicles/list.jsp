@@ -29,26 +29,29 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>Marque</th>
-
+                                    <th>Model</th>
                                     <th>Nombre de places</th>
-
                                     <th>Action</th>
                                 </tr>
                                 <tr>
 
                                 <c:forEach items="${vehicles}" var="vehicle">
+
                                     <td>${vehicle.identifier}.</td>
                                     <td>${vehicle.constructor}</td>
+                                    <td>${vehicle.model}</td>
                                     <td>${vehicle.nbPlaces}</td>
 
                                     <td>
-                                        <a class="btn btn-primary disabled" href="${pageContext.request.co}">
+                                        <a class="btn btn-primary " href="#">
                                             <i class="fa fa-play"></i>
                                         </a>
-                                        <a class="btn btn-success disabled" href="#">
+                                        <a class="btn btn-success "
+                                           href="${pageContext.request.contextPath}/cars/edit?id=${vehicle.identifier}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger disabled" href="#">
+                                        <a class="btn btn-danger"
+                                           href="${pageContext.request.contextPath}/cars/delete?id=${vehicle.identifier}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

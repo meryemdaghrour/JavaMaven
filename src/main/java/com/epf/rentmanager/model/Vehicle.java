@@ -14,7 +14,7 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(long identifier, String constructor,  int nbPlaces) throws ServiceException {
+    public Vehicle(long identifier, String constructor,String model,  int nbPlaces) throws ServiceException {
         if (constructor == null || constructor.isEmpty()) {
             throw new ServiceException("Le constructeur de la vehicule ne peut pas être vide");
         }
@@ -24,6 +24,7 @@ public class Vehicle {
         }
         this.identifier = identifier;
         this.constructor = constructor;
+        this.model=model;
         this.nbPlaces = nbPlaces;
 
     }

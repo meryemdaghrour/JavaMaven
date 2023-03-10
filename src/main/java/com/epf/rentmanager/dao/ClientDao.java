@@ -9,21 +9,18 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ClientDao {
 
-	private static ClientDao instance = null;
+
 	Connection connection=null;
 	PreparedStatement pstatement=null;
 	Statement statement=null;
 	ResultSet rs = null;
 	private ClientDao()  {}
-	public static ClientDao getInstance()  {
-		if(instance == null) {
-			instance = new ClientDao();
-		}
-		return instance;
-	}
+
 
 
 	private static final String UPDATE_CLIENT_QUERY="UPDATE Client SET nom = ?, prenom = ?, email = ?, naissance = ? WHERE id= ?;";

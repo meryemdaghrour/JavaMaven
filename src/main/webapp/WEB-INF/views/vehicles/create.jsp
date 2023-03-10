@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Voitures
+             Ajouter une voiture
             </h1>
         </section>
 

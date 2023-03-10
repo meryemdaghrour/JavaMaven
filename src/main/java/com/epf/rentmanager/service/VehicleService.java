@@ -7,30 +7,26 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
+import org.springframework.stereotype.Service;
 
+@Service
 public class VehicleService {
 
 	private VehicleDao vehicleDao;
 	public static VehicleService instance;
 	
-	private VehicleService() {
-		this.vehicleDao = VehicleDao.getInstance();
+	private VehicleService(VehicleDao vehicleDao) {
+		this.vehicleDao = vehicleDao;
 	}
 	
-	public static VehicleService getInstance() {
-		if (instance == null) {
-			instance = new VehicleService();
-		}
-		
-		return instance;
-	}
+
 
 
 	
 	
 	public long create(Vehicle vehicle) throws ServiceException {
 		try    {
-			return vehicleDao.getInstance().create(vehicle);
+			return vehicleDao.create(vehicle);
 
 		}catch (DaoException e){
 			e.printStackTrace();
@@ -40,7 +36,7 @@ public class VehicleService {
 	}
 	public long update(Vehicle vehicle,long id) throws ServiceException {
 		try    {
-			return vehicleDao.getInstance().update(vehicle,id);
+			return vehicleDao.update(vehicle,id);
 
 		}catch (DaoException e){
 			e.printStackTrace();
@@ -51,7 +47,7 @@ public class VehicleService {
 
 	public Vehicle findById(long id) throws ServiceException {
 		try    {
-			return vehicleDao.getInstance().findById(id);
+			return vehicleDao.findById(id);
 
 		}catch (DaoException e){
 			e.printStackTrace();
@@ -63,7 +59,7 @@ public class VehicleService {
 	public List<Vehicle> findAll() throws ServiceException {
 
 		try    {
-			return vehicleDao.getInstance().findAll();
+			return vehicleDao.findAll();
 
 		}catch (DaoException e)
 		{
@@ -75,7 +71,7 @@ public class VehicleService {
 	public Long delete(Vehicle vehicle) throws ServiceException {
 
 		try    {
-			return vehicleDao.getInstance().delete(vehicle);
+			return vehicleDao.delete(vehicle);
 
 		}catch (DaoException e){
 			e.printStackTrace();
@@ -87,7 +83,7 @@ public class VehicleService {
 	public int getNumber() throws ServiceException {
 
 		try    {
-			return vehicleDao.getInstance().getNumber();
+			return vehicleDao.getNumber();
 
 		}catch (DaoException e){
 			e.printStackTrace();

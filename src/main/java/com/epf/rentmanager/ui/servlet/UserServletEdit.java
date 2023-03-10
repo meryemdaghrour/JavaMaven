@@ -4,6 +4,10 @@ package com.epf.rentmanager.ui.servlet;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.ReservationService;
+import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +19,17 @@ import java.time.LocalDate;
 
 @WebServlet("/users/edit")
 public class UserServletEdit extends HttpServlet {
-
+    @Autowired
+    VehicleService vehicleService;
+    @Autowired
+    ClientService clientService;
+    @Autowired
+    ReservationService reservationService;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -27,11 +41,7 @@ public class UserServletEdit extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-        ClientService clientService = ClientService.getInstance();
-
         try {
-
             Client c = new Client
                     (request.getParameter("last_name"),
                             request.getParameter("first_name"),
@@ -39,11 +49,10 @@ public class UserServletEdit extends HttpServlet {
                             LocalDate.parse(request.getParameter("dateBirth"))
                     );
             clientService.update(c,Long.parseLong(request.getParameter("id")));
-            doGet(request, response);
+            response.sendRedirect("/rentmanager/users");
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);
-
         }
     }
 }

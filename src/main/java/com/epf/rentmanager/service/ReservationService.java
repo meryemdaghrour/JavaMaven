@@ -9,31 +9,33 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
+@Service
 public class ReservationService {
 
     private ReservationDao reservationDao;
+    private ClientDao clientDao;
+    private VehicleDao vehicleDao;
     public static ReservationService instance;
 
-    private ReservationService()
+    private ReservationService(ReservationDao reservationDao,ClientDao clientDao,VehicleDao vehicleDao)
     {
-        this.reservationDao = ReservationDao.getInstance();
+
+        this.reservationDao = reservationDao;
+        this.clientDao=clientDao;
+        this.vehicleDao=vehicleDao;
     }
 
-    public static ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
-        }
-        return instance;
-    }
+
 
 
     public long create(Reservation reservation) throws ServiceException {
         try    {
-            return reservationDao.getInstance().create(reservation);
+            return reservationDao.create(reservation);
 
         }catch (DaoException e){
             e.printStackTrace();
@@ -45,8 +47,8 @@ public class ReservationService {
         try{
             for (Reservation r: list)
             {
-                Client c= ClientDao.getInstance().findById(r.getClient().getIdentifier());
-                Vehicle v= VehicleDao.getInstance().findById(r.getVehicle().getIdentifier());
+                Client c= clientDao.findById(r.getClient().getIdentifier());
+                Vehicle v= vehicleDao.findById(r.getVehicle().getIdentifier());
                 r.setClient(c);
                 r.setVehicle(v);
             }
@@ -66,7 +68,7 @@ public class ReservationService {
     public List<Reservation> findAll() throws ServiceException {
 
         try    {
-            List<Reservation> myList= reservationDao.getInstance().findAll();
+            List<Reservation> myList= reservationDao.findAll();
             myList=findListe(myList);
             return myList;
 
@@ -80,7 +82,7 @@ public class ReservationService {
     public Long delete(Reservation reservation) throws ServiceException {
 
         try    {
-            return reservationDao.getInstance().delete(reservation);
+            return reservationDao.delete(reservation);
 
         }catch (DaoException e){
             e.printStackTrace();
@@ -92,7 +94,7 @@ public class ReservationService {
     public List<Reservation> findByClientId(long id) throws ServiceException {
 
         try    {
-            List<Reservation> myList= reservationDao.getInstance().findResaByClientId(id);
+            List<Reservation> myList= reservationDao.findResaByClientId(id);
             myList=findListe(myList);
             return myList;
 
@@ -107,7 +109,7 @@ public class ReservationService {
     public List<Reservation> findByVehiculeId(long id) throws ServiceException {
 
         try    {
-            List<Reservation> myList= reservationDao.getInstance().findResaByVehicleId(id);
+            List<Reservation> myList= reservationDao.findResaByVehicleId(id);
             myList=findListe(myList);
             return myList;
 
@@ -121,10 +123,10 @@ public class ReservationService {
     public List<Vehicle> listVehiculeReser(long clientId) throws ServiceException
     {
         try {
-            List<Vehicle> list= reservationDao.getInstance().listVehiculeReser(clientId);
+            List<Vehicle> list= reservationDao.listVehiculeReser(clientId);
             for (Vehicle vv : list) {
 
-                vv = VehicleDao.getInstance().findById(vv.getIdentifier());
+                vv = vehicleDao.findById(vv.getIdentifier());
 
 
             }
@@ -136,4 +138,4 @@ public class ReservationService {
 
         }
     }
-}
+
