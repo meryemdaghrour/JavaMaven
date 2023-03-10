@@ -117,4 +117,23 @@ public class ReservationService {
         }
 
     }
+
+    public List<Vehicle> listVehiculeReser(long clientId) throws ServiceException
+    {
+        try {
+            List<Vehicle> list= reservationDao.getInstance().listVehiculeReser(clientId);
+            for (Vehicle vv : list) {
+
+                vv = VehicleDao.getInstance().findById(vv.getIdentifier());
+
+
+            }
+            return list;
+        } catch (DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+
+        }
+    }
 }

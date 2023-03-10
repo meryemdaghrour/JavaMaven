@@ -146,5 +146,25 @@ public class ReservationDao {
 		return myList;
 	}
 
+	public List<Vehicle> listVehiculeReser(long clientId) throws DaoException {
+		List<Vehicle> myList=null;
+		try {
+			connection = ConnectionManager.getConnection();
+			pstatement = connection.prepareStatement(FIND_RESERVATIONS_BY_CLIENT_QUERY);
+			pstatement.setLong(1, clientId);
+			rs = pstatement.executeQuery();
+			System.out.println("Test");
+
+			while (rs.next()) {
+				Vehicle v = new Vehicle(rs.getInt("vehicle_id"));
+				myList.add(v);
+			}
+
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return myList;
+	}
+
 
 }

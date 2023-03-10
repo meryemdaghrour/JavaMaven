@@ -12,7 +12,9 @@ C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServlet.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletCreate.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\VehicleServlet.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\exception\DaoException.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletDetails.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\dao\ClientDao.java

@@ -53,10 +53,11 @@
                                             <th>Date de fin</th>
                                         </tr>
                                         <tr>
-                                            <td>3.</td>
-                                            <td>Renault Megane</td>
-                                            <td>10/01/2018</td>
-                                            <td>12/01/2018</td>
+                                            <td>${client.identifier}</td>
+                                            <td>${client.name}</td>
+                                            <td>${client.lastName}</td>
+                                            <td>${client.emailAdress}</td>
+
                                         </tr>
                                         <tr>
                                             <td>7.</td>

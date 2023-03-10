@@ -33,8 +33,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Utilisateurs</span>
               <span class="info-box-number">
-
-               <% request.getAttribute("nbClients"); %>
+                 ${nbClients}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -49,7 +48,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Voitures</span>
               <span class="info-box-number">
-               <% request.getAttribute("nbVehicule"); %>
+                ${nbVehicule}
                 </span>
             </div>
             <!-- /.info-box-content -->
@@ -81,7 +80,7 @@
   </div>
   <!-- /.content-wrapper -->
   
-   <jsp:include page='/webapp/WEB-INF/views/common/footer.jsp'></jsp:include>
+   <jsp:include page='/WEB-INF/views/common/footer.jsp'></jsp:include>
 
 
 </div>

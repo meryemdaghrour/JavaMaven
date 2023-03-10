@@ -20,7 +20,11 @@
                     <!-- Profile Image -->
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <h3 class="profile-username text-center">John Doe (john.doe@epf.fr)</h3>
+                            <h4>
+                                ${client.name}
+                                ${client.lastName} <br>
+                                    ${client.emailAdress}
+                                </h4>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
@@ -52,18 +56,17 @@
                                             <th>Date de debut</th>
                                             <th>Date de fin</th>
                                         </tr>
-                                        <tr>
-                                            <td>3.</td>
-                                            <td>Renault Megane</td>
-                                            <td>10/01/2018</td>
-                                            <td>12/01/2018</td>
+<c:forEach items="${reservations}" var ="res">
+    <tr>
+    <td>${res.identifier}</td>
+    <td>${res.vehicle}</td>
+    <td>${res.debut}</td>
+    <td>${res.fin}</td>
+
+        </c:forEach>
+
                                         </tr>
-                                        <tr>
-                                            <td>7.</td>
-                                            <td>Peugeot 207</td>
-                                            <td>10/01/2018</td>
-                                            <td>12/01/2018</td>
-                                        </tr>
+
                                     </table>
                                 </div>
                             </div>

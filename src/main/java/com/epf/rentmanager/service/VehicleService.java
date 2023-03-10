@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
 
@@ -23,6 +24,8 @@ public class VehicleService {
 		
 		return instance;
 	}
+
+
 	
 	
 	public long create(Vehicle vehicle) throws ServiceException {
