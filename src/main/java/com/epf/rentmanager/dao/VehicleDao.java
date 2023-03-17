@@ -19,10 +19,7 @@ import org.springframework.stereotype.Repository;
 public class VehicleDao {
 	
 
-	Connection connection=null;
-	PreparedStatement pstatement=null;
-	Statement statement=null;
-	ResultSet rs = null;
+
 	private VehicleDao() {}
 
 	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur,model,nb_places) VALUES(?, ?,?);";
@@ -35,14 +32,16 @@ public class VehicleDao {
 	private static final String GET_NUMBER = "SELECT COUNT(*) AS total FROM Vehicle;";
 	
 	public long create(Vehicle vehicle) throws DaoException {
-		try {
-			connection = ConnectionManager.getConnection();
-			pstatement = connection.prepareStatement(CREATE_VEHICLE_QUERY,Statement.RETURN_GENERATED_KEYS);
+		try(Connection connection = ConnectionManager.getConnection();
+		PreparedStatement pstatement = connection.prepareStatement(CREATE_VEHICLE_QUERY,Statement.RETURN_GENERATED_KEYS);
+		ResultSet rs = pstatement.getGeneratedKeys();
+		) {
+
 			pstatement.setString(1, vehicle.getConstructor());
 			pstatement.setString(2, vehicle.getModel());
 			pstatement.setInt(3, vehicle.getNbPlaces());
 			pstatement.executeUpdate();
-			rs = pstatement.getGeneratedKeys();
+
 			if (rs.next()) {
 				vehicle.setIdentifier(rs.getInt(1));
 				System.out.println("vehicle added with succes " );
@@ -58,9 +57,9 @@ public class VehicleDao {
 
 	public long update(Vehicle vehicle, long id) throws DaoException {
 
-		try {
-			connection = ConnectionManager.getConnection();
-			pstatement = connection.prepareStatement(UPDATE_VEHICLE_QUERY);
+		try (Connection connection = ConnectionManager.getConnection();
+		PreparedStatement pstatement = connection.prepareStatement(UPDATE_VEHICLE_QUERY);){
+
 			pstatement.setLong(4, id);
 			pstatement.setString(1, vehicle.getConstructor());
 			pstatement.setString(2, vehicle.getModel());
@@ -77,9 +76,9 @@ public class VehicleDao {
 
 	public long delete(Vehicle vehicle) throws DaoException {
 
-		try {
-			connection = ConnectionManager.getConnection();
-			pstatement = connection.prepareStatement(DELETE_VEHICLE_QUERY);
+		try (Connection connection = ConnectionManager.getConnection();
+		PreparedStatement pstatement = connection.prepareStatement(DELETE_VEHICLE_QUERY);){
+
 			pstatement.setLong(1, vehicle.getIdentifier());
 			pstatement.executeUpdate();
 			System.out.println("vehicle deleted");
@@ -92,11 +91,13 @@ public class VehicleDao {
 
 	public Vehicle findById(long id) throws DaoException {
 		Vehicle vehicle=null;
-		try {
-			connection = ConnectionManager.getConnection();
-			pstatement = connection.prepareStatement(FIND_VEHICLE_QUERY);
+		try(Connection connection = ConnectionManager.getConnection();
+	 	PreparedStatement  pstatement = connection.prepareStatement(FIND_VEHICLE_QUERY);
+		  )
+		{
+
 			pstatement.setLong(1, id);
-			rs = pstatement.executeQuery();
+			ResultSet rs = pstatement.executeQuery();
 			System.out.println("Veficle found ");
 			if (rs.next()) {
 				String constructeur=rs.getString("constructeur");
@@ -119,10 +120,11 @@ public class VehicleDao {
 
 		List<Vehicle> myList=new ArrayList<>();
 
-		try {
-			connection = ConnectionManager.getConnection();
-			statement=connection.createStatement();
-			rs=statement.executeQuery(FIND_VEHICLES_QUERY);
+		try(Connection connection = ConnectionManager.getConnection();
+		Statement statement=connection.createStatement();
+		ResultSet rs=statement.executeQuery(FIND_VEHICLES_QUERY);)
+		{
+
 			while (rs.next())
 			{
 				int id=rs.getInt("id");
@@ -145,10 +147,11 @@ public class VehicleDao {
 
 		int nb=0;
 
-		try {
-			connection = ConnectionManager.getConnection();
-			statement=connection.createStatement();
-			rs=statement.executeQuery(GET_NUMBER);
+		try(Connection connection = ConnectionManager.getConnection();
+		Statement statement=connection.createStatement();
+		ResultSet rs=statement.executeQuery(GET_NUMBER);)
+		{
+
 			if (rs.next()) {
 				nb = rs.getInt("total");
 			}
@@ -156,14 +159,6 @@ public class VehicleDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
-		}finally {
-			try {
-				if (rs != null) rs.close();
-				if (statement != null) statement.close();
-				if (connection != null) connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return nb;
 	}

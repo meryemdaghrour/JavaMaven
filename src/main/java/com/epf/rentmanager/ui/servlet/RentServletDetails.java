@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 
 @WebServlet("/rents/details")
@@ -40,7 +41,7 @@ public class RentServletDetails extends HttpServlet {
         try {
 
             Reservation reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
-            Client client=clientService.findById(reservation.getClient().getIdentifier());
+            Optional<Client> client=clientService.findById(reservation.getClient().getIdentifier());
             Vehicle vehicle=vehicleService.findById(reservation.getVehicle().getIdentifier());
 
             request.setAttribute("client", client);

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @WebServlet("/rents/edit")
 public class RentServletEdit  extends HttpServlet {
@@ -50,11 +51,11 @@ public class RentServletEdit  extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            Client c=clientService.findById(Long.parseLong(request.getParameter("client")));
+            Optional<Client> c=clientService.findById(Long.parseLong(request.getParameter("client")));
             Vehicle vehicle=vehicleService.findById(Long.parseLong(request.getParameter("rent")));
 
             Reservation reservation= new Reservation
-                    (c,vehicle,
+                    (c.get(),vehicle,
                             LocalDate.parse( request.getParameter("begin")),
                             LocalDate.parse( request.getParameter("end"))
                     );

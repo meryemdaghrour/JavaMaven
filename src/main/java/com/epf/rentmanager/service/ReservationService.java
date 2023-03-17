@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -47,12 +48,12 @@ public class ReservationService {
         try{
             for (Reservation r: list)
             {
-                Client c= clientDao.findById(r.getClient().getIdentifier());
+               Optional< Client> c= clientDao.findById(r.getClient().getIdentifier());
                 Vehicle v= vehicleDao.findById(r.getVehicle().getIdentifier());
-                r.getClient().setName(c.getName());
-                r.getClient().setLastName(c.getLastName());
-                r.getClient().setEmailAdress(c.getEmailAdress());
-                r.getClient().setDateOfbirth(c.getDateOfbirth());
+                r.getClient().setName(c.get().getName());
+                r.getClient().setLastName(c.get().getLastName());
+                r.getClient().setEmailAdress(c.get().getEmailAdress());
+                r.getClient().setDateOfbirth(c.get().getDateOfbirth());
                 r.getVehicle().setConstructor(v.getConstructor());
                 r.getVehicle().setModel(v.getModel());
                 r.getVehicle().setNbPlaces(v.getNbPlaces());

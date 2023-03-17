@@ -1,6 +1,7 @@
 package com.epf.rentmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.exception.DaoException;
@@ -41,7 +42,7 @@ public class ClientService {
 		}
 	}
 
-	public Client findById(long id) throws ServiceException {
+	public Optional<Client> findById(long id) throws ServiceException {
 		try    {
 			return clientDao.findById(id);
 

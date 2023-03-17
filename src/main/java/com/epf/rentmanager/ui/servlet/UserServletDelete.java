@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/users/delete")
 public class UserServletDelete extends HttpServlet {
@@ -37,8 +38,8 @@ public class UserServletDelete extends HttpServlet {
 
         try {
 
-            Client client=clientService.findById(Long.parseLong(request.getParameter("id")));
-            request.setAttribute("clients",clientService.delete(client));
+            Optional<Client> client=clientService.findById(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("clients",clientService.delete(client.get()));
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
