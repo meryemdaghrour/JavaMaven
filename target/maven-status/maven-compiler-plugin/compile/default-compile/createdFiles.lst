@@ -17,10 +17,12 @@ com\epf\rentmanager\ui\servlet\UserServlet.class
 com\epf\rentmanager\ui\servlet\UserServletCreate.class
 com\epf\rentmanager\service\ReservationService.class
 com\epf\rentmanager\ui\servlet\UserServletDetails.class
+com\epf\rentmanager\ui\servlet\RentServletDetails.class
 com\epf\rentmanager\utils\IOUtils.class
 com\epf\rentmanager\ui\servlet\HomeServlet.class
 com\epf\rentmanager\persistence\FillDatabase.class
 com\epf\rentmanager\ui\servlet\RentServletCreate.class
+com\epf\rentmanager\ui\servlet\VehicleServletDetails.class
 com\epf\rentmanager\service\ClientService.class
 com\epf\rentmanager\ui\servlet\UserServletDelete.class
 com\epf\rentmanager\dao\VehicleDao.class

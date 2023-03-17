@@ -20,18 +20,21 @@
                     <!-- Profile Image -->
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <h4>
+                            <h4>Client: <br><br>
                                 ${client.name}
                                 ${client.lastName} <br>
-                                    ${client.emailAdress}
-                                </h4>
-
+                                ${client.emailAdress}
+                            </h4> <br>
+                            <h4>Voiture:</h4>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Reservation(s)</b> <a class="pull-right">${total}</a>
+                                     <a >${vehicle.constructor}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Voiture(s)</b> <a class="pull-right">${total}</a>
+                                    <a > ${vehicle.model}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a >  ${vehicle.nbPlaces}</a>
                                 </li>
                             </ul>
                         </div>
@@ -44,56 +47,32 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#rents" data-toggle="tab">Reservations</a></li>
-                            <li><a href="#cars" data-toggle="tab">Voitures</a></li>
+
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="rents">
                                 <div class="box-body no-padding">
                                     <table class="table table-striped">
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th>Voiture</th>
-                                            <th>Date de debut</th>
-                                            <th>Date de fin</th>
-                                        </tr>
-<c:forEach items="${reservations}" var ="res">
+<tr>
+    <th style="width: 10px">#</th>
+
+    <th>Debut</th>
+    <th>Fin</th>
+
+</tr>
+
     <tr>
-    <td>${res.identifier}</td>
-    <td>${res.vehicle}</td>
-    <td>${res.debut}</td>
-    <td>${res.fin}</td>
+    <td>${reservation.identifier}</td>
 
-        </c:forEach>
-
-                                        </tr>
+    <td>${reservation.debut}</td>
+    <td>${reservation.fin}</td>
+    </tr>
 
                                     </table>
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="cars">
-                                <!-- /.box-header -->
-                                <div class="box-body no-padding">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th>Modele</th>
-                                            <th>Constructeur</th>
-                                            <th style=>Nombre de places</th>
-                                        </tr>
-                                        <c:forEach items="${reservations}" var ="res">
-                                        <tr>
-                                            <td>${res.vehicle.identifier}</td>
-                                            <td>${res.vehicle.model}</td>
-                                            <td>${res.vehicle.constructor}</td>
-                                            <td>${res.vehicle.nbPlaces}</td>
 
-                                            </c:forEach>
-
-
-                                    </table>
-                                </div>
-                            </div>
                             <!-- /.tab-pane -->
                         </div>
                         <!-- /.tab-content -->

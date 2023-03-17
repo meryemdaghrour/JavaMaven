@@ -14,9 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet("/users/details")
-public class UserServletDetails extends HttpServlet {
+@WebServlet("/cars/details")
+public class VehicleServletDetails extends HttpServlet {
 
     @Autowired
     VehicleService vehicleService;
@@ -35,11 +34,13 @@ public class UserServletDetails extends HttpServlet {
             response) throws ServletException, IOException {
 
         try {
-            request.setAttribute("client",
-                    clientService.findById(Long.parseLong(request.getParameter("id"))
+
+            request.setAttribute("vehicle",
+                    vehicleService.findById(Long.parseLong(request.getParameter("id"))
                     ));
-            request.setAttribute("reservations",
-                    reservationService.findByClientId(Long.parseLong(request.getParameter("id"))));
+            request.setAttribute("rents",
+                    reservationService.findByVehiculeId(Long.parseLong(request.getParameter("id"))));
+
             request.setAttribute("total",
                     reservationService.getNumber(Long.parseLong(request.getParameter("id"))));
 
@@ -48,7 +49,7 @@ public class UserServletDetails extends HttpServlet {
             throw new RuntimeException(e);
         }
         this.getServletContext().
-                getRequestDispatcher("/WEB-INF/views/users/details.jsp").
+                getRequestDispatcher("/WEB-INF/views/vehicles/details.jsp").
                 forward(request, response);
 
     }

@@ -39,7 +39,7 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
 	private static final String FIND_RESERVATION_QUERY = "SELECT  client_id, vehicle_id, debut, fin FROM Reservation where id=?;";
 
-
+	private static final String GET_NUMBER_Res_By_Client = "SELECT COUNT(*) AS total FROM Reservation where client_id=? ;";
 	public long create(Reservation reservation) throws DaoException {
 
 		try {
@@ -186,25 +186,7 @@ public class ReservationDao {
 		return myList;
 	}
 
-	public List<Vehicle> listVehiculeReser(long clientId) throws DaoException {
-		List<Vehicle> myList = null;
-		try {
-			connection = ConnectionManager.getConnection();
-			pstatement = connection.prepareStatement(FIND_RESERVATIONS_BY_CLIENT_QUERY);
-			pstatement.setLong(1, clientId);
-			rs = pstatement.executeQuery();
-			System.out.println("Test");
 
-			while (rs.next()) {
-				Vehicle v = new Vehicle(rs.getInt("vehicle_id"));
-				myList.add(v);
-			}
-
-		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
-		}
-		return myList;
-	}
 
 	public long update(Reservation reservation, long id) throws DaoException {
 
@@ -223,6 +205,37 @@ public class ReservationDao {
 			System.out.println(ex.getMessage());
 		}
 		return reservation.getIdentifier();
+
+	}
+
+	public int getNumberResByClient(long  id) throws DaoException {
+
+	int nb=0;
+		try {
+			connection = ConnectionManager.getConnection();
+			pstatement = connection.prepareStatement(GET_NUMBER_Res_By_Client);
+			pstatement.setLong(1, id);
+			rs = pstatement.executeQuery();
+
+
+
+			if (rs.next()) {
+				 nb = rs.getInt("total");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException();
+		}finally {
+			try {
+				if (rs != null) rs.close();
+				if (statement != null) statement.close();
+				if (connection != null) connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return nb;
 
 	}
 

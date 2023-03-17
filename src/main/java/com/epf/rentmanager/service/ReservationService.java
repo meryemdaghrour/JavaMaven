@@ -134,23 +134,9 @@ public class ReservationService {
 
     }
 
-    public List<Vehicle> listVehiculeReser(long clientId) throws ServiceException
-    {
-        try {
-            List<Vehicle> list= reservationDao.listVehiculeReser(clientId);
-            for (Vehicle vv : list) {
-
-                vv = vehicleDao.findById(vv.getIdentifier());
 
 
-            }
-            return list;
-        } catch (DaoException e){
-            e.printStackTrace();
-            throw new ServiceException();
-        }
 
-        }
 
     public long update(Reservation reservation,long id) throws ServiceException {
         try    {
@@ -161,5 +147,18 @@ public class ReservationService {
             throw new ServiceException();
         }
     }
+
+    public int getNumber(long id) throws ServiceException {
+
+        try    {
+            return reservationDao.getNumberResByClient(id);
+
+        }catch (DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+
+    }
+
     }
 

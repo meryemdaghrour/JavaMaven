@@ -1,6 +1,9 @@
 package com.epf.rentmanager.ui.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -15,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/users/details")
-public class UserServletDetails extends HttpServlet {
+@WebServlet("/rents/details")
+public class RentServletDetails extends HttpServlet {
 
     @Autowired
     VehicleService vehicleService;
@@ -35,20 +38,21 @@ public class UserServletDetails extends HttpServlet {
             response) throws ServletException, IOException {
 
         try {
-            request.setAttribute("client",
-                    clientService.findById(Long.parseLong(request.getParameter("id"))
-                    ));
-            request.setAttribute("reservations",
-                    reservationService.findByClientId(Long.parseLong(request.getParameter("id"))));
-            request.setAttribute("total",
-                    reservationService.getNumber(Long.parseLong(request.getParameter("id"))));
+
+            Reservation reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
+            Client client=clientService.findById(reservation.getClient().getIdentifier());
+            Vehicle vehicle=vehicleService.findById(reservation.getVehicle().getIdentifier());
+
+            request.setAttribute("client", client);
+            request.setAttribute("reservation",reservation);
+            request.setAttribute("vehicle",vehicle);
 
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
         this.getServletContext().
-                getRequestDispatcher("/WEB-INF/views/users/details.jsp").
+                getRequestDispatcher("/WEB-INF/views/rents/details.jsp").
                 forward(request, response);
 
     }
