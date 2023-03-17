@@ -59,6 +59,13 @@ public class Reservation {
         this.debut = debut;
         this.fin = fin;
     }
+    public Reservation( Client client, Vehicle vehicle, LocalDate debut, LocalDate fin) {
+
+        this.client = client;
+        this.vehicle = vehicle;
+        this.debut = debut;
+        this.fin = fin;
+    }
     public Reservation(){}
 
     @Override
@@ -78,8 +85,8 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "identifier=" + identifier +
-                ", clientId=" + client +
-                ", vehicleId=" + vehicle +
+                ", client=" + client.getName() + client.getLastName()+
+                ", vehicle=" + vehicle.getConstructor() +vehicle.getModel()+
                 ", debut=" + debut +
                 ", fin=" + fin +
                 '}';

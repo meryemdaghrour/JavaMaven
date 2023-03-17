@@ -7,22 +7,24 @@ import java.util.List;
 import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ServiceException {
 
-        ApplicationContext context = new
-                AnnotationConfigApplicationContext(AppConfiguration.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
         ClientService clientService = context.getBean(ClientService.class);
         VehicleService vehicleService = context.getBean(VehicleService.class);
+        ReservationService reservationService = context.getBean(ReservationService.class);
 
-     try{
+    /* try{
 
             List<Client> clients= clientService.findAll();
             for (Client c: clients
@@ -113,8 +115,26 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
+    }*/
+        Vehicle vv=new Vehicle(5,"bm","hh",5);
+        vehicleService.create(vv)
+        ;
+        Client c=new Client(2,"haytem","mannoubi","mer.da@espeit.tn",
+                LocalDate.of(1995,10,9));
+        clientService.create(c);
+        Reservation reservation=new Reservation(c,vv,
+                LocalDate.of(2000,10,9),
+                LocalDate.of(2000,10,19));
+        Reservation reservation1=new Reservation(c,vv,
+                LocalDate.of(2000,10,9),
+                LocalDate.of(2000,10,19));
+        reservationService.create(reservation);
+        reservationService.create(reservation1);
+        List<Reservation> reservations= reservationService.findAll();
+        for (Reservation v: reservations
+        ) {
+            System.out.println(v.toString());
+        }
 
 
     }

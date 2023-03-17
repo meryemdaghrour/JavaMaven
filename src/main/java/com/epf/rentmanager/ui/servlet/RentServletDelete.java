@@ -1,8 +1,8 @@
 package com.epf.rentmanager.ui.servlet;
 
-
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 
-@WebServlet("/users/create")
-public class UserServletCreate extends HttpServlet {
+
+@WebServlet("/rents/delete")
+public class RentServletDelete extends HttpServlet {
     @Autowired
     VehicleService vehicleService;
     @Autowired
@@ -31,35 +31,19 @@ public class UserServletCreate extends HttpServlet {
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
-public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
-{
 
-    this.getServletContext().
-            getRequestDispatcher("/WEB-INF/views/users/create.jsp").
-            forward(request, response);
-}
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse
+            response) throws ServletException, IOException {
 
         try {
-            Client c= new Client
-                    (request.getParameter("last_name"),
-                    request.getParameter("first_name"),
-                    request.getParameter("email"),
-                    LocalDate.parse(request.getParameter("dateBirth"))
-                     );
-            clientService.create(c);
-            response.sendRedirect("/rentmanager/users");
 
+            Reservation reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("reservations",reservationService.delete(reservation));
         } catch (ServiceException e) {
             throw new RuntimeException(e);
-
-
+        }
+        response.sendRedirect("/rentmanager/rents");
 
     }
-}
 }

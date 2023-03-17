@@ -1,6 +1,8 @@
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\VehicleServletDelete.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\dao\ReservationDao.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\service\ClientService.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\RentServlet.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\VehicleServletEdit.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\utils\IOUtils.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\configuration\WebConfiguration.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\model\Reservation.java
@@ -12,6 +14,7 @@ C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\exception\ServiceException.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\service\ReservationService.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\VehicleServletCreate.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\model\Client.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\HomeServlet.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\service\VehicleService.java
@@ -20,6 +23,8 @@ C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletDelete.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletCreate.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletDetails.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\RentServletDelete.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\configuration\AppConfiguration.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\dao\ClientDao.java
 C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\UserServletEdit.java
+C:\Users\AH-INFO\Desktop\EPF\java\projet\rentmanager\JavaMaven\src\main\java\com\epf\rentmanager\ui\servlet\RentServletCreate.java

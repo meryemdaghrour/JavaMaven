@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-              Ajouter un utilisateur
+                Reservations
             </h1>
         </section>
 
@@ -28,43 +28,49 @@
                         <form class="form-horizontal" method="post" >
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="last_name" class="col-sm-2 control-label">Nom</label>
+                                    <label for="client" class="col-sm-2 control-label">Client</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+                                        <select class="form-control" id="client" name="client">
+                                            <c:forEach items="${clients}" var ="client">
+                                                <option value="${client.identifier}">${client.name} ${client.lastName}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="first_name" class="col-sm-2 control-label">Prenom</label>
+                                    <label for="rent" class="col-sm-2 control-label">Voiture</label>
+
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom">
+                                        <select class="form-control" id="rent" name="rent">
+                                            <c:forEach items="${rents}" var ="rent">
+                                                <option value="${rent.identifier}">${rent.constructor} ${rent.model}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="email" class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                                    </div>
-                                </div>
+                                    <label for="begin" class="col-sm-2 control-label">Date de debut</label>
 
-                                <div class="form-group">
-                                    <label for="dateBirth" class="col-sm-2 control-label">Date Of Bith</label>
                                     <div class="col-sm-10">
                                         <input type="date" class="form-control"
-                                               id="dateBirth" name="dateBirth" placeholder="Date Of Birth">
+                                               id="begin" name="begin" placeholder="Date Debut">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="end" class="col-sm-2 control-label">Date de fin</label>
 
+                                    <div class="col-sm-10">
+
+                                        <input type="date" class="form-control"
+                                               id="end" name="end" placeholder="Date Fin">
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <a href="${pageContext.request.contextPath}/users">
-                                    <button type="submit" class="btn btn-info pull-right">Ajouter</button>
-                                </a>
+                                <button type="submit" class="btn btn-info pull-right">Modifier</button>
                             </div>
-
                             <!-- /.box-footer -->
                         </form>
                     </div>
@@ -81,5 +87,13 @@
 <!-- ./wrapper -->
 
 <%@ include file="/WEB-INF/views/common/js_imports.jsp" %>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<script>
+    $(function () {
+        $('[data-mask]').inputmask()
+    });
+</script>
 </body>
 </html>

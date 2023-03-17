@@ -49,8 +49,13 @@ public class ReservationService {
             {
                 Client c= clientDao.findById(r.getClient().getIdentifier());
                 Vehicle v= vehicleDao.findById(r.getVehicle().getIdentifier());
-                r.setClient(c);
-                r.setVehicle(v);
+                r.getClient().setName(c.getName());
+                r.getClient().setLastName(c.getLastName());
+                r.getClient().setEmailAdress(c.getEmailAdress());
+                r.getClient().setDateOfbirth(c.getDateOfbirth());
+                r.getVehicle().setConstructor(v.getConstructor());
+                r.getVehicle().setModel(v.getModel());
+                r.getVehicle().setNbPlaces(v.getNbPlaces());
             }
 
             return list;
@@ -89,6 +94,15 @@ public class ReservationService {
             throw new ServiceException();
         }
 
+    }
+    public Reservation findById(long id) throws ServiceException {
+        try    {
+            return reservationDao.findById(id);
+
+        }catch (DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
     }
 
     public List<Reservation> findByClientId(long id) throws ServiceException {
@@ -137,5 +151,15 @@ public class ReservationService {
         }
 
         }
+
+    public long update(Reservation reservation,long id) throws ServiceException {
+        try    {
+            return reservationDao.update(reservation, id);
+
+        }catch (DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
     }
 

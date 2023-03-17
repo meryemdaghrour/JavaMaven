@@ -28,6 +28,7 @@ public class Vehicle {
         this.nbPlaces = nbPlaces;
 
     }
+
     public Vehicle(long identifier) {
         this.identifier = identifier;
     }
