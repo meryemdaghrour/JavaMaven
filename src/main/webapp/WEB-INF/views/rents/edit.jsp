@@ -14,6 +14,13 @@
             var startDate = document.getElementById("begin").value;
             var endDate = document.getElementById("end").value;
             var currentDate = new Date().toISOString().split('T')[0];
+            var maxDuration = 7; // Maximum duration in days
+
+            var duration = Math.floor((Date.parse(endDate) - Date.parse(startDate)) / 86400000); // Calculate duration in days
+            if (duration > maxDuration) {
+                alert("La duree de la reservation ne doit pas depasser " + maxDuration + " jours.");
+                return false;
+            }
 
             if (startDate < currentDate) {
                 alert("La date de début de la réservation doit être supérieure ou égale à la date actuelle.");
