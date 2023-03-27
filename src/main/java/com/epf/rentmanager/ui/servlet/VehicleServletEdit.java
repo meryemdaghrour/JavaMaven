@@ -29,6 +29,13 @@ public class VehicleServletEdit extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        try {
+            request.setAttribute("vehicle",
+                    vehicleService.findById(Long.parseLong(request.getParameter("id"))
+                    ).get());
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
 
         this.getServletContext().
                 getRequestDispatcher("/WEB-INF/views/vehicles/edit.jsp").
@@ -45,7 +52,7 @@ public class VehicleServletEdit extends HttpServlet {
 
             vehicleService.update(vehicle,Long.parseLong(request.getParameter("id")));
 
-            response.sendRedirect("/rentmanager/rents");
+            response.sendRedirect("/rentmanager/cars");
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);

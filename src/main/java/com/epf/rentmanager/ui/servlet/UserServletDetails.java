@@ -37,7 +37,7 @@ public class UserServletDetails extends HttpServlet {
         try {
             request.setAttribute("client",
                     clientService.findById(Long.parseLong(request.getParameter("id"))
-                    ));
+                    ).get());
             request.setAttribute("reservations",
                     reservationService.findByClientId(Long.parseLong(request.getParameter("id"))));
             request.setAttribute("total",

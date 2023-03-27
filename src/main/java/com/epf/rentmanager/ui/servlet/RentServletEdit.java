@@ -35,6 +35,14 @@ public class RentServletEdit  extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            Optional<Reservation> reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
+            Optional<Client> client=clientService.findById(reservation.get().getClient().getIdentifier());
+            Optional< Vehicle> vehicle=vehicleService.findById(reservation.get().getVehicle().getIdentifier());
+
+            request.setAttribute("c", client.get());
+            request.setAttribute("reservation",reservation.get());
+            request.setAttribute("v",vehicle.get());
+
             request.setAttribute("clients", clientService.findAll());
             request.setAttribute("rents",vehicleService.findAll());
 
@@ -52,10 +60,10 @@ public class RentServletEdit  extends HttpServlet {
 
         try {
             Optional<Client> c=clientService.findById(Long.parseLong(request.getParameter("client")));
-            Vehicle vehicle=vehicleService.findById(Long.parseLong(request.getParameter("rent")));
+           Optional< Vehicle> vehicle=vehicleService.findById(Long.parseLong(request.getParameter("rent")));
 
             Reservation reservation= new Reservation
-                    (c.get(),vehicle,
+                    (c.get(),vehicle.get(),
                             LocalDate.parse( request.getParameter("begin")),
                             LocalDate.parse( request.getParameter("end"))
                     );

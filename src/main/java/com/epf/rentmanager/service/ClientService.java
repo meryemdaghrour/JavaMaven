@@ -22,7 +22,7 @@ public class ClientService {
 
 	
 	
-	public long create(Client client) throws ServiceException {
+	public Optional<Long> create(Client client) throws ServiceException {
 		try    {
 			return clientDao.create(client);
 
@@ -32,7 +32,7 @@ public class ClientService {
 		}
 	}
 
-	public long update(Client client,long id) throws ServiceException {
+	public Optional<Long> update(Client client,long id) throws ServiceException {
 		try    {
 			return clientDao.update(client, id);
 
@@ -64,7 +64,7 @@ public class ClientService {
 
 	}
 
-	public Long delete(Client client) throws ServiceException {
+	public Optional<Long> delete(Client client) throws ServiceException {
 
 		try    {
 			return clientDao.delete(client);

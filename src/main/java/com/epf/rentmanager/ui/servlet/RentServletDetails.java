@@ -40,13 +40,13 @@ public class RentServletDetails extends HttpServlet {
 
         try {
 
-            Reservation reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
-            Optional<Client> client=clientService.findById(reservation.getClient().getIdentifier());
-            Vehicle vehicle=vehicleService.findById(reservation.getVehicle().getIdentifier());
+            Optional<Reservation> reservation=reservationService.findById(Long.parseLong(request.getParameter("id")));
+            Optional<Client> client=clientService.findById(reservation.get().getClient().getIdentifier());
+           Optional< Vehicle> vehicle=vehicleService.findById(reservation.get().getVehicle().getIdentifier());
 
-            request.setAttribute("client", client);
-            request.setAttribute("reservation",reservation);
-            request.setAttribute("vehicle",vehicle);
+            request.setAttribute("client", client.get());
+            request.setAttribute("reservation",reservation.get());
+            request.setAttribute("vehicle",vehicle.get());
 
 
         } catch (ServiceException e) {

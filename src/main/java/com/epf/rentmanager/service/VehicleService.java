@@ -1,6 +1,7 @@
 package com.epf.rentmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
@@ -24,7 +25,7 @@ public class VehicleService {
 
 	
 	
-	public long create(Vehicle vehicle) throws ServiceException {
+	public Optional<Long> create(Vehicle vehicle) throws ServiceException {
 		try    {
 			return vehicleDao.create(vehicle);
 
@@ -34,7 +35,7 @@ public class VehicleService {
 		}
 		
 	}
-	public long update(Vehicle vehicle,long id) throws ServiceException {
+	public Optional<Long> update(Vehicle vehicle, long id) throws ServiceException {
 		try    {
 			return vehicleDao.update(vehicle,id);
 
@@ -45,7 +46,7 @@ public class VehicleService {
 
 	}
 
-	public Vehicle findById(long id) throws ServiceException {
+	public Optional<Vehicle> findById(long id) throws ServiceException {
 		try    {
 			return vehicleDao.findById(id);
 
@@ -68,7 +69,7 @@ public class VehicleService {
 		}
 
 	}
-	public Long delete(Vehicle vehicle) throws ServiceException {
+	public Optional<Long> delete(Vehicle vehicle) throws ServiceException {
 
 		try    {
 			return vehicleDao.delete(vehicle);

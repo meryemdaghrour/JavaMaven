@@ -37,7 +37,7 @@ public class VehicleServletDetails extends HttpServlet {
 
             request.setAttribute("vehicle",
                     vehicleService.findById(Long.parseLong(request.getParameter("id"))
-                    ));
+                    ).get());
             request.setAttribute("rents",
                     reservationService.findByVehiculeId(Long.parseLong(request.getParameter("id"))));
 

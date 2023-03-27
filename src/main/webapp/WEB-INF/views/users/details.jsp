@@ -21,6 +21,7 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <h4>
+
                                 ${client.name}
                                 ${client.lastName} <br>
                                     ${client.emailAdress}

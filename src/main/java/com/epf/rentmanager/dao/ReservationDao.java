@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
@@ -37,8 +38,9 @@ public class ReservationDao {
 	private static final String FIND_RESERVATION_QUERY = "SELECT  client_id, vehicle_id, debut, fin FROM Reservation where id=?;";
 
 	private static final String GET_NUMBER_Res_By_Client = "SELECT COUNT(*) AS total FROM Reservation where client_id=? ;";
-	public long create(Reservation reservation) throws DaoException {
+	public Optional<Long> create(Reservation reservation) throws DaoException {
 
+		Optional<Long> optional = Optional.empty();
 		try (Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(CREATE_RESERVATION_QUERY, Statement.RETURN_GENERATED_KEYS);){
 
@@ -52,6 +54,7 @@ public class ReservationDao {
 
 			if (rs.next()) {
 				reservation.setIdentifier(rs.getInt(1));
+				optional = Optional.of(reservation.getIdentifier());
 				System.out.println("reservation added with succes ");
 			} else {
 				System.out.println("Error while creating the reservation ");
@@ -59,12 +62,12 @@ public class ReservationDao {
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return reservation.getIdentifier();
+		return optional;
 	}
 
-	public Reservation findById(long id) throws DaoException {
+	public Optional<Reservation> findById(long id) throws DaoException {
 
-		Reservation reservation = null;
+		Optional<Reservation> optional = Optional.empty();
 
 		try(Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(FIND_RESERVATION_QUERY);) {
@@ -79,7 +82,8 @@ public class ReservationDao {
 				Vehicle v = new Vehicle(rs.getInt("vehicle_id"));
 				LocalDate dateDebut = rs.getDate("debut").toLocalDate();
 				LocalDate dateFin = rs.getDate("fin").toLocalDate();
-				reservation = new Reservation(id, c, v, dateDebut, dateFin);
+				Reservation reservation = new Reservation(id, c, v, dateDebut, dateFin);
+				optional = Optional.of(reservation);
 
 			} else {
 				System.out.println("no vehicle : " + id);
@@ -88,10 +92,13 @@ public class ReservationDao {
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return reservation;
+		return optional;
 	}
 
-	public long delete(Reservation reservation) throws DaoException {
+	public Optional<Long> delete(Reservation reservation) throws DaoException {
+
+		Optional<Long> optional = Optional.empty();
+
 		try (Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(DELETE_RESERVATION_QUERY);)
 		{
@@ -99,11 +106,12 @@ public class ReservationDao {
 			pstatement.setLong(1, reservation.getIdentifier());
 			pstatement.executeUpdate();
 			System.out.println("reservation deleted");
+			optional = Optional.of(reservation.getIdentifier());
 
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return reservation.getIdentifier();
+		return optional;
 	}
 
 
@@ -186,7 +194,10 @@ public class ReservationDao {
 
 
 
-	public long update(Reservation reservation, long id) throws DaoException {
+	public Optional<Long> update(Reservation reservation, long id) throws DaoException {
+
+
+		Optional<Long> optional = Optional.empty();
 
 		try (Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(UPDATE_RESERVATION_QUERY);){
@@ -198,11 +209,11 @@ public class ReservationDao {
 			pstatement.setDate(4, java.sql.Date.valueOf(reservation.getFin()));
 			pstatement.executeUpdate();
 			System.out.println("Reservation updated with succes ");
-
+			optional = Optional.of(reservation.getIdentifier());
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return reservation.getIdentifier();
+		return optional;
 
 	}
 

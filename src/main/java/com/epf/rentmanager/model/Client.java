@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Client {
 
+
     private long identifier;
     private String name;
     private String lastName;

@@ -9,6 +9,33 @@
     <!-- Left side column. contains the logo and sidebar -->
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
+<script>
+
+    function validateForm() {
+        var startDate = document.getElementById("begin").value;
+        var endDate = document.getElementById("end").value;
+        var currentDate = new Date().toISOString().split('T')[0];
+        var maxDuration = 7; // Maximum duration in days
+
+        var duration = Math.floor((Date.parse(endDate) - Date.parse(startDate)) / 86400000); // Calculate duration in days
+        if (duration > maxDuration) {
+            alert("La duree de la reservation ne doit pas depasser " + maxDuration + " jours.");
+            return false;
+        }
+
+        if (startDate < currentDate) {
+            alert("La date de début de la réservation doit être supérieure ou égale à la date actuelle.");
+            return false;
+        }
+
+        if (startDate >= endDate) {
+            alert("La date de debut doit etre anterieure a la date de fin de la reservation.");
+            return false;
+        }
+        return true;
+    }
+
+</script>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -25,7 +52,8 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" >
+                        <form class="form-horizontal" method="post" onsubmit="return validateForm()"
+                             id="form-reservation" >
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="client" class="col-sm-2 control-label">Client</label>
@@ -54,7 +82,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="date" class="form-control"
-                                               id="begin" name="begin" placeholder="Date Debut">
+                                               id="begin" name="begin" required placeholder="Date Debut">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -63,8 +91,9 @@
                                     <div class="col-sm-10">
 
                                         <input type="date" class="form-control"
-                                               id="end" name="end" placeholder="Date Fin">
+                                               id="end" name="end" required placeholder="Date Fin">
                                     </div>
+                                    <span id="date-fin-error" style="color: red;"></span><br>
                                 </div>
                             </div>
                             <!-- /.box-body -->

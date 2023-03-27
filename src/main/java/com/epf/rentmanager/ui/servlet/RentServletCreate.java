@@ -55,10 +55,10 @@ public class RentServletCreate extends HttpServlet {
        try {
 
           Optional<Client> c=clientService.findById(Long.parseLong(request.getParameter("client")));
-           Vehicle vehicle=vehicleService.findById(Long.parseLong(request.getParameter("rent")));
+           Optional<Vehicle> vehicle=vehicleService.findById(Long.parseLong(request.getParameter("rent")));
 
            Reservation reservation= new Reservation
-                    (c.get(),vehicle,
+                    (c.get(),vehicle.get(),
                             LocalDate.parse( request.getParameter("begin")),
                             LocalDate.parse( request.getParameter("end"))
                     );

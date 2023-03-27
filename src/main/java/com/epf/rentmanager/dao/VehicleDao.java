@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
@@ -31,7 +32,10 @@ public class VehicleDao {
 
 	private static final String GET_NUMBER = "SELECT COUNT(*) AS total FROM Vehicle;";
 	
-	public long create(Vehicle vehicle) throws DaoException {
+	public Optional<Long>  create(Vehicle vehicle) throws DaoException {
+
+		Optional<Long> optional = Optional.empty();
+
 		try(Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(CREATE_VEHICLE_QUERY,Statement.RETURN_GENERATED_KEYS);
 		ResultSet rs = pstatement.getGeneratedKeys();
@@ -42,8 +46,10 @@ public class VehicleDao {
 			pstatement.setInt(3, vehicle.getNbPlaces());
 			pstatement.executeUpdate();
 
+
 			if (rs.next()) {
 				vehicle.setIdentifier(rs.getInt(1));
+				optional = Optional.of(vehicle.getIdentifier());
 				System.out.println("vehicle added with succes " );
 			}
 			else {
@@ -52,11 +58,11 @@ public class VehicleDao {
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return vehicle.getIdentifier();
+		return optional;
 	}
 
-	public long update(Vehicle vehicle, long id) throws DaoException {
-
+	public Optional<Long> update(Vehicle vehicle, long id) throws DaoException {
+		Optional<Long> optional = Optional.empty();
 		try (Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(UPDATE_VEHICLE_QUERY);){
 
@@ -65,32 +71,34 @@ public class VehicleDao {
 			pstatement.setString(2, vehicle.getModel());
 			pstatement.setInt(3, vehicle.getNbPlaces());
 			pstatement.executeUpdate();
+			optional = Optional.of(vehicle.getIdentifier());
 			System.out.println("Vehicle updated with succes " );
 
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return vehicle.getIdentifier();
-
+return optional;
 	}
 
-	public long delete(Vehicle vehicle) throws DaoException {
+	public Optional<Long> delete(Vehicle vehicle) throws DaoException {
+		Optional<Long> optional = Optional.empty();
 
 		try (Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstatement = connection.prepareStatement(DELETE_VEHICLE_QUERY);){
 
 			pstatement.setLong(1, vehicle.getIdentifier());
+			optional = Optional.of(vehicle.getIdentifier());
 			pstatement.executeUpdate();
 			System.out.println("vehicle deleted");
 
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return vehicle.getIdentifier();
+		return optional;
 	}
 
-	public Vehicle findById(long id) throws DaoException {
-		Vehicle vehicle=null;
+	public Optional<Vehicle> findById(long id) throws DaoException {
+		Optional<Vehicle> optional = Optional.empty();
 		try(Connection connection = ConnectionManager.getConnection();
 	 	PreparedStatement  pstatement = connection.prepareStatement(FIND_VEHICLE_QUERY);
 		  )
@@ -103,7 +111,8 @@ public class VehicleDao {
 				String constructeur=rs.getString("constructeur");
 				String model=rs.getString("model");
 				int nb_places=rs.getInt("nb_places");
-				vehicle= new Vehicle(id,constructeur,model,nb_places);
+				Vehicle vehicle= new Vehicle(id,constructeur,model,nb_places);
+				optional = Optional.of(vehicle);
 			} else {
 				System.out.println("no vehicle : " + id);
 			}
@@ -113,7 +122,7 @@ public class VehicleDao {
 		} catch (ServiceException e) {
 			throw new RuntimeException(e);
 		}
-		return vehicle;
+		return optional;
 	}
 
 	public List<Vehicle> findAll() throws DaoException {

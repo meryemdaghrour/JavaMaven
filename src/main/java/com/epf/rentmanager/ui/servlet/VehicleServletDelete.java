@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/cars/delete")
 public class VehicleServletDelete extends HttpServlet {
@@ -39,8 +40,8 @@ public class VehicleServletDelete extends HttpServlet {
 
         try {
 
-            Vehicle vehicle=vehicleService.findById(Long.parseLong(request.getParameter("id")));
-            request.setAttribute("Vehicles",vehicleService.delete(vehicle));
+            Optional<Vehicle> vehicle=vehicleService.findById(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("Vehicles",vehicleService.delete(vehicle.get()));
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

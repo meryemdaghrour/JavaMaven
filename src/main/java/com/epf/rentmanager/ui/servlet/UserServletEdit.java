@@ -33,6 +33,13 @@ public class UserServletEdit extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        try {
+            request.setAttribute("client",
+                    clientService.findById(Long.parseLong(request.getParameter("id"))
+                    ).get());
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
         this.getServletContext().
                 getRequestDispatcher("/WEB-INF/views/users/edit.jsp").
                 forward(request, response);

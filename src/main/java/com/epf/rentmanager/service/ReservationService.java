@@ -34,7 +34,7 @@ public class ReservationService {
 
 
 
-    public long create(Reservation reservation) throws ServiceException {
+    public Optional<Long> create(Reservation reservation) throws ServiceException {
         try    {
             return reservationDao.create(reservation);
 
@@ -49,14 +49,14 @@ public class ReservationService {
             for (Reservation r: list)
             {
                Optional< Client> c= clientDao.findById(r.getClient().getIdentifier());
-                Vehicle v= vehicleDao.findById(r.getVehicle().getIdentifier());
+                Optional<Vehicle> v= vehicleDao.findById(r.getVehicle().getIdentifier());
                 r.getClient().setName(c.get().getName());
                 r.getClient().setLastName(c.get().getLastName());
                 r.getClient().setEmailAdress(c.get().getEmailAdress());
                 r.getClient().setDateOfbirth(c.get().getDateOfbirth());
-                r.getVehicle().setConstructor(v.getConstructor());
-                r.getVehicle().setModel(v.getModel());
-                r.getVehicle().setNbPlaces(v.getNbPlaces());
+                r.getVehicle().setConstructor(v.get().getConstructor());
+                r.getVehicle().setModel(v.get().getModel());
+                r.getVehicle().setNbPlaces(v.get().getNbPlaces());
             }
 
             return list;
@@ -85,7 +85,7 @@ public class ReservationService {
 
     }
 
-    public Long delete(Reservation reservation) throws ServiceException {
+    public Optional<Long> delete(Reservation reservation) throws ServiceException {
 
         try    {
             return reservationDao.delete(reservation);
@@ -96,7 +96,7 @@ public class ReservationService {
         }
 
     }
-    public Reservation findById(long id) throws ServiceException {
+    public Optional<Reservation> findById(long id) throws ServiceException {
         try    {
             return reservationDao.findById(id);
 
@@ -139,7 +139,7 @@ public class ReservationService {
 
 
 
-    public long update(Reservation reservation,long id) throws ServiceException {
+    public Optional<Long> update(Reservation reservation,long id) throws ServiceException {
         try    {
             return reservationDao.update(reservation, id);
 

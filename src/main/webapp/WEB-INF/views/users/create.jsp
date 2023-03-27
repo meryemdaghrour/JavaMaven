@@ -8,7 +8,19 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <!-- Left side column. contains the logo and sidebar -->
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-
+<script>
+    function validateAge() {
+        var dateNaissance = new Date(document.getElementById("dateBirth").value);
+        var ageDiffMs = Date.now() - dateNaissance.getTime();
+        var ageDate = new Date(ageDiffMs);
+        var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+        if (age < 18) {
+            alert("Le client doit avoir au moins 18 ans !");
+            return false;
+        }
+        return true;
+    }
+</script>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -25,35 +37,38 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" >
+                        <form class="form-horizontal" method="post" onsubmit="return validateAge()" >
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="last_name" class="col-sm-2 control-label">Nom</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               required placeholder="Nom" minlength="3">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="first_name" class="col-sm-2 control-label">Prenom</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom">
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               required placeholder="Prenom" minlength="3">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" id="email" name="email" required placeholder="Email">
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="dateBirth" class="col-sm-2 control-label">Date Of Bith</label>
+                                    <label for="dateBirth" class="col-sm-2 control-label">Date Of Birth</label>
                                     <div class="col-sm-10">
                                         <input type="date" class="form-control"
-                                               id="dateBirth" name="dateBirth" placeholder="Date Of Birth">
+                                               id="dateBirth" name="dateBirth" placeholder="Date Of Birth" required>
                                     </div>
                                 </div>
 
